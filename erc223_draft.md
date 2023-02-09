@@ -28,6 +28,10 @@ One downside of the commonly used ERC20 standard that ERC223 is intended to solv
 
 ERC223 standard is intended to simplify the interaction with contracts that are intended to work with tokens. ERC223 utilizes "deposit" pattern similar to plain Ether depositing patterns - in case of ERC223 deposit to the contract a user or a UI must simply send the tokens with the `transfer` function. This is one transaction as opposed to two step process of `approve + transferFrom` depositing.
 
+ERC20 deposit: `approve` ~53K gas, `transferFrom` ~80K gas
+
+ERC223 deposit: `transfer` and handling on the receivers side ~46K gas
+
 ## Specification
 
 Token
