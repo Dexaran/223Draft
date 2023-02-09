@@ -5,7 +5,7 @@ author: Dexaran (@Dexaran) <dexaran@ethereumclassic.org>
 type: Standards Track
 category: ERC
 status: Review
-created: 2017-5-03
+created: 2017-05-03
 ---
 
 ## Simple Summary
@@ -55,36 +55,51 @@ If the receiver does not implement the `tokenReceived` function, consider the co
 #### totalSupply
 
 ```js
+
 function totalSupply() constant returns (uint256 totalSupply)
+
 ```
+
 Get the total token supply
 
 #### name
 
 ```js
+
 function name() constant returns (string _name)
+
 ```
+
 Get the name of token
 
 #### symbol
 
 ```js
+
 function symbol() constant returns (bytes32 _symbol)
+
 ```
+
 Get the symbol of token
 
 #### decimals
 
 ```js
+
 function decimals() constant returns (uint8 _decimals)
+
 ```
+
 Get decimals of token
 
 #### standard
 
 ```js
+
 function standard() constant returns (string _standard)
+
 ```
+
 Get the standard of token contract. For some services it is important to know how to treat this particular token. If token supports ERC223 standard then it must explicitly tell that it does.
 
 This function **MUST** return "erc223" for this token standard. If no "standard()" function is implemented in the contract then the contract must be considered to be ERC20.
@@ -92,15 +107,20 @@ This function **MUST** return "erc223" for this token standard. If no "standard(
 #### balanceOf
 
 ```js
+
 function balanceOf(address _owner) constant returns (uint256 balance)
+
 ```
+
 Get the account balance of another account with address _owner
 
 
 #### transfer(address, uint)
 
 ```js
+
 function transfer(address _to, uint _value) returns (bool)
+
 ```
 
 Needed due to backwards compatibility reasons because of ERC20 transfer function doesn't have `bytes` parameter. This function must transfer tokens and invoke the function `tokenReceived(address, uint256, bytes calldata)` in `_to`, if _to is a contract. If the `tokenReceived` function is not implemented in ` _to` (receiver contract), then the transaction must fail and the transfer of tokens should be reverted.
@@ -108,8 +128,11 @@ Needed due to backwards compatibility reasons because of ERC20 transfer function
 #### transfer(address, uint, bytes)
 
 ```js
+
 function transfer(address _to, uint _value, bytes calldata _data) returns (bool)
+
 ```
+
 function that is always called when someone wants to transfer tokens.
 This function must transfer tokens and invoke the function `tokenReceived (address, uint256, bytes)` in `_to`, if _to is a contract. If the `tokenReceived` function is not implemented in ` _to` (receiver contract), then the transaction must fail and the transfer of tokens should not occur. 
 If `_to` is an externally owned address, then the transaction must be sent without trying to execute ` tokenReceived` in `_to`.
@@ -122,7 +145,9 @@ NOTE: The recommended way to check whether the `_to` is a contract or an address
 #### Transfer
 
 ```js
+
 event Transfer(address indexed _from, address indexed _to, uint256 _value)
+
 ```
 
 Triggered when tokens are transferred. Compatible with ERC20 `Transfer` event.
@@ -130,7 +155,9 @@ Triggered when tokens are transferred. Compatible with ERC20 `Transfer` event.
 #### TransferData
 
 ```js
+
 event TransferData(bytes _data)
+
 ```
 
 Triggered when tokens are transferred and logs transaction metadata. This is implemented as a separate event to keep `Transfer(address, address, uint256)` ERC20-compatible.
@@ -138,8 +165,11 @@ Triggered when tokens are transferred and logs transaction metadata. This is imp
 ## Contract that is intended to receive ERC223 tokens
 
 ```js
+
 function tokenReceived(address _from, uint _value, bytes calldata _data)
+
 ```
+
 A function for handling token transfers, which is called from the token contract, when a token holder sends tokens. `_from` is the address of the sender of the token,` _value` is the amount of incoming tokens, and `_data` is attached data similar to` msg.data` of Ether transactions. It works by analogy with the fallback function of Ether transactions and returns nothing.
 
 NOTE: `msg.sender` will be a token-contract inside the `tokenReceived` function. It may be important to filter which tokens are sent (by token-contract address). The token sender (the person who initiated the token transaction) will be `_from` inside the` tokenReceived` function.
