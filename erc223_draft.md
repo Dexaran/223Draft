@@ -194,4 +194,4 @@ This is highly recommended implementation of ERC 223 token: https://github.com/D
 - original issue: https://github.com/ethereum/EIPs/issues/223
 
 ## Copyright
-Copyright and related rights waived via [CC0](../LICENSE.md).
+Copyright and related rights waived via CC0.
