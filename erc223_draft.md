@@ -1,6 +1,6 @@
 ---
 eip: 223
-title: ERC-223 Token
+title: 223 Token with communication model
 description: Token with event handling and communication model
 author: Dexaran (@Dexaran) <dexaran@ethereumclassic.org>
 discussions-to: https://ethereum-magicians.org/t/erc-223-token-standard/12894
