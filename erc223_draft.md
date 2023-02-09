@@ -22,15 +22,15 @@ This standard introduces a communication model by enforcing the `transfer` to ex
 
 This standard sticks to the push transaction model where the transfer of assets is initiated on the senders side and handled on the receivers side. As the result, ERC223 transfers are more gas-efficient while dealing with depositing to contracts as ERC223 tokens can be deposited with just one transaction while ERC20 tokens require at least two calls (one for `approve` and the second that will invoke `transferFrom`).
 
-- ERC20 deposit: `approve` ~53K gas, `transferFrom` ~80K gas
+- ERC-20 deposit: `approve` ~53K gas, `transferFrom` ~80K gas
 
-- ERC223 deposit: `transfer` and handling on the receivers side ~46K gas
+- ERC-223 deposit: `transfer` and handling on the receivers side ~46K gas
 
 This standard introduces the ability to correct user errors by allowing to handle ANY transactions on the recipient side and reject incorrect or improper transactions. This tokens utilize ONE transferring method for both types of interactions with tokens and externally owned addresses which can simplify the user experience and allow to avoid possible user mistakes.
 
-One downside of the commonly used ERC20 standard that ERC223 is intended to solve is that ERC20 implements two methods of token transferring: (1) `transfer` function and (2) `approve + transferFrom` pattern. Transfer function of ERC20 standard does not notify the receiver and therefore if any tokens are sent to a contract with the `transfer` function then the receiver will not recognize this transfer and the tokens can become stuck in the receivers address without any possibility of recovering them.
+One downside of the commonly used ERC-20 standard that ERC-223 is intended to solve is that ERC-20 implements two methods of token transferring: (1) `transfer` function and (2) `approve + transferFrom` pattern. Transfer function of ERC20 standard does not notify the receiver and therefore if any tokens are sent to a contract with the `transfer` function then the receiver will not recognize this transfer and the tokens can become stuck in the receivers address without any possibility of recovering them.
 
-ERC223 standard is intended to simplify the interaction with contracts that are intended to work with tokens. ERC223 utilizes "deposit" pattern similar to plain Ether depositing patterns - in case of ERC223 deposit to the contract a user or a UI must simply send the tokens with the `transfer` function. This is one transaction as opposed to two step process of `approve + transferFrom` depositing.
+ERC223 standard is intended to simplify the interaction with contracts that are intended to work with tokens. ERC-223 utilizes "deposit" pattern similar to plain Ether depositing patterns - in case of ERC-223 deposit to the contract a user or a UI must simply send the tokens with the `transfer` function. This is one transaction as opposed to two step process of `approve + transferFrom` depositing.
 
 This standard allows payloads to be attached to transactions using the `bytes calldata _data` parameter, which can encode a second function call in the destination address, similar to how `msg.data` does in an Ether transaction, or allow for public loggin on chain should it be necessary for financial transactions.
 
