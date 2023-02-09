@@ -2,7 +2,7 @@
 eip: 223
 title: ERC-223 Token
 author: Dexaran (@Dexaran) <dexaran@ethereumclassic.org>
-type: Standards Track
+type: Standard Track
 category: ERC
 status: Review
 created: 2017-05-03
