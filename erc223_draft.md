@@ -1,7 +1,7 @@
 ---
 eip: 223
 title: Token Standard
-author: Dexaran <dexaran@ethereumclassic.org>
+author: Dexaran (@Dexaran) <dexaran@ethereumclassic.org>
 type: Standards Track
 category: ERC
 status: Review
