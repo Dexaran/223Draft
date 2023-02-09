@@ -146,13 +146,16 @@ NOTE: `msg.sender` will be a token-contract inside the `tokenReceived` function.
 
 IMPORTANT: This function must be named `tokenReceived` and take parameters` address`, `uint256`,` bytes` to match the [function signature](https://www.4byte.directory/signatures/?bytes4_signature=0xc0ee0b8a) `0xc0ee0b8a`.
 
+
 ## Security Considerations
 
 This token utilizes the model similar to plain Ether behavior. Therefore replay issues must be taken into account.
 
+
 ## Reference implementation
 
 This is highly recommended implementation of ERC 223 token: https://github.com/Dexaran/ERC223-token-standard/tree/development/token/ERC223
+
 
 ## History
 
