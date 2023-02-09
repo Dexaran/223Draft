@@ -18,6 +18,12 @@ The following describes standard functions a token contract and contract working
 
 ## Motivation
 
+1. This token introduces a communication model for contracts that can be utilized to straighten the behavior of contracts that interact with tokens as opposed to ERC-20 where a token transfer could be ignored by the receiving contract.
+2. This token is more gas-efficient when depositing tokens to contracts.
+3. This token allows for `_data` recording for financial transfers.
+
+## Rationale
+
 This standard introduces a communication model by enforcing the `transfer` to execute a handler function in the destination address. This is an important security consideration as it is required that the receiver explicitly implements the token handling function. In cases where the receiver does not implements such function the transfer MUST be reverted.
 
 This standard sticks to the push transaction model where the transfer of assets is initiated on the senders side and handled on the receivers side. As the result, ERC223 transfers are more gas-efficient while dealing with depositing to contracts as ERC223 tokens can be deposited with just one transaction while ERC20 tokens require at least two calls (one for `approve` and the second that will invoke `transferFrom`).
