@@ -1,10 +1,12 @@
 ---
 eip: 223
 title: ERC-223 Token
+description: Token with event handling and communication model
 author: Dexaran (@Dexaran) <dexaran@ethereumclassic.org>
-type: Standard Track
-category: ERC
+discussions-to: https://github.com/ethereum/EIPs/issues/223
 status: Review
+type: Standards Track
+category: ERC
 created: 2017-05-03
 ---
 
