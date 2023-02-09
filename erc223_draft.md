@@ -18,18 +18,15 @@ The following describes standard functions a token contract and contract working
 
 ## Motivation
 
+This standard introduces a communication model by enforcing the `transfer` to execute a handler function in the destination address. This is an important security consideration as it is required that the receiver explicitly implements the token handling function. In cases where the receiver does not implements such function the transfer MUST be reverted.
 
+This standard sticks to the push transaction model where the transfer of assets is initiated on the senders side and handled on the receivers side.
 
-Another disadvantages of ERC20 that ERC223 will solve: 
-1. Lack of `transfer` handling possibility.
-2. Loss of tokens.
-3. Token-transactions should match Ethereum ideology of uniformity. When a user wants to transfer tokens, he should always call `transfer`. It doesn't matter if the user is depositing to a contract or sending to an externally owned account.
+This standard introduces the ability to correct user errors by allowing to handle ANY transactions on the recipient side and reject incorrect or improper transactions. This tokens utilize ONE transferring method for both types of interactions with tokens and externally owned addresses which can simplify the user experience and allow to avoid possible user mistakes.
 
-Those will allow contracts to handle incoming token transactions and prevent accidentally sent tokens from being accepted by contracts (and stuck at contract's balance).
+One downside of the commonly used ERC20 standard that ERC223 is intended to solve is that ERC20 implements two methods of token transferring: (1) `transfer` function and (2) `approve + transferFrom` pattern. Transfer function of ERC20 standard does not notify the receiver and therefore if any tokens are sent to a contract with the `transfer` function then the receiver will not recognize this transfer and the tokens can become stuck in the receivers address without any possibility of recovering them.
 
-For example decentralized exchange will no more need to require users to call `approve` then call `deposit` (which is internally calling `transferFrom` to withdraw approved tokens). Token transaction will automatically be handled at the exchange contract.
-
-The most important here is a call of `tokenReceived` when performing a transaction to a contract.
+ERC223 standard is intended to simplify the interaction with contracts that are intended to work with tokens. ERC223 utilizes "deposit" pattern similar to plain Ether depositing patterns - in case of ERC223 deposit to the contract a user or a UI must simply send the tokens with the `transfer` function. This is one transaction as opposed to two step process of `approve + transferFrom` depositing.
 
 ## Specification
 
