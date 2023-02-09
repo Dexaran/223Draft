@@ -136,13 +136,16 @@ function tokenReceived(address _from, uint _value, bytes calldata _data)
 ```
 A function for handling token transfers, which is called from the token contract, when a token holder sends tokens. `_from` is the address of the sender of the token,` _value` is the amount of incoming tokens, and `_data` is attached data similar to` msg.data` of Ether transactions. It works by analogy with the fallback function of Ether transactions and returns nothing.
 
-NOTE: since solidity version 0.6.0+ there is a new `reveive()` function to handle plain Ether transfers - therefore the function `tokenFallback` was renamed to `tokenReceived` to keep the token behavior more intuitive and compatible with Ether behavior.
-
 NOTE: `msg.sender` will be a token-contract inside the `tokenReceived` function. It may be important to filter which tokens are sent (by token-contract address). The token sender (the person who initiated the token transaction) will be `_from` inside the` tokenReceived` function.
 
 IMPORTANT: This function must be named `tokenReceived` and take parameters` address`, `uint256`,` bytes` to match the [function signature](https://www.4byte.directory/signatures/?bytes4_signature=0xc0ee0b8a) `0xc0ee0b8a`.
 
+## Security Considerations
+
+This token utilizes the model similar to plain Ether behavior. Therefore replay issues must be taken into account.
+
 ## Reference implementation
+
 This is highly recommended implementation of ERC 223 token: https://github.com/Dexaran/ERC223-token-standard/tree/development/token/ERC223
 
 ## History
