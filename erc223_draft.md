@@ -39,7 +39,7 @@ This standard allows payloads to be attached to transactions using the `bytes ca
 Token
 Contracts that works with tokens
 
-## Methods
+### Methods
 
 NOTE: An important point is that contract developers must implement `tokenReceived` if they want their contracts to work with the specified tokens.
 
@@ -111,7 +111,7 @@ If `_to` is an externally owned address, then the transaction must be sent witho
 
 NOTE: The recommended way to check whether the `_to` is a contract or an address is to assemble the code of ` _to`. If there is no code in `_to`, then this is an externally owned address, otherwise it's a contract.
 
-## Events
+### Events
 
 #### Transfer
 
