@@ -20,7 +20,11 @@ The following describes standard functions a token contract and contract working
 
 This standard introduces a communication model by enforcing the `transfer` to execute a handler function in the destination address. This is an important security consideration as it is required that the receiver explicitly implements the token handling function. In cases where the receiver does not implements such function the transfer MUST be reverted.
 
-This standard sticks to the push transaction model where the transfer of assets is initiated on the senders side and handled on the receivers side.
+This standard sticks to the push transaction model where the transfer of assets is initiated on the senders side and handled on the receivers side. As the result, ERC223 transfers are more gas-efficient while dealing with depositing to contracts as ERC223 tokens can be deposited with just one transaction while ERC20 tokens require at least two calls (one for `approve` and the second that will invoke `transferFrom`).
+
+- ERC20 deposit: `approve` ~53K gas, `transferFrom` ~80K gas
+
+- ERC223 deposit: `transfer` and handling on the receivers side ~46K gas
 
 This standard introduces the ability to correct user errors by allowing to handle ANY transactions on the recipient side and reject incorrect or improper transactions. This tokens utilize ONE transferring method for both types of interactions with tokens and externally owned addresses which can simplify the user experience and allow to avoid possible user mistakes.
 
@@ -28,9 +32,7 @@ One downside of the commonly used ERC20 standard that ERC223 is intended to solv
 
 ERC223 standard is intended to simplify the interaction with contracts that are intended to work with tokens. ERC223 utilizes "deposit" pattern similar to plain Ether depositing patterns - in case of ERC223 deposit to the contract a user or a UI must simply send the tokens with the `transfer` function. This is one transaction as opposed to two step process of `approve + transferFrom` depositing.
 
-ERC20 deposit: `approve` ~53K gas, `transferFrom` ~80K gas
-
-ERC223 deposit: `transfer` and handling on the receivers side ~46K gas
+This standard allows payloads to be attached to transactions using the `bytes calldata _data` parameter, which can encode a second function call in the destination address, similar to how `msg.data` does in an Ether transaction, or allow for public loggin on chain should it be necessary for financial transactions.
 
 ## Specification
 
@@ -127,7 +129,7 @@ event TransferData(bytes _data)
 
 Triggered when tokens are transferred and logs transaction metadata. This is implemented as a separate event to keep `Transfer(address, address, uint256)` ERC20-compatible.
 
-## Contract to work with tokens
+## Contract that is intended to receive ERC223 tokens
 
 ```js
 function tokenReceived(address _from, uint _value, bytes calldata _data)
@@ -140,9 +142,12 @@ NOTE: `msg.sender` will be a token-contract inside the `tokenReceived` function.
 
 IMPORTANT: This function must be named `tokenReceived` and take parameters` address`, `uint256`,` bytes` to match the [function signature](https://www.4byte.directory/signatures/?bytes4_signature=0xc0ee0b8a) `0xc0ee0b8a`.
 
-## Recommended implementation
+## Reference implementation
 This is highly recommended implementation of ERC 223 token: https://github.com/Dexaran/ERC223-token-standard/tree/development/token/ERC223
 
+## History
+
+- original issue: https://github.com/ethereum/EIPs/issues/223
 
 ## Copyright
 Copyright and related rights waived via [CC0](../LICENSE.md).
